@@ -9,6 +9,8 @@ import (
 	"github.com/pooulad/gurl-shortner/pkg"
 )
 
+const RESOURCE_DIR = "/static/"
+
 func main() {
 	shortener := pkg.NewUrlShortner(make(map[string]string))
 
@@ -19,6 +21,11 @@ func main() {
 
 	host := os.Getenv("HOST_ADDR")
 	port := os.Getenv("HOST_PORT")
+
+	var HandlerResources = http.StripPrefix(RESOURCE_DIR,
+		http.FileServer(http.Dir("."+RESOURCE_DIR)),
+	)
+	http.Handle(RESOURCE_DIR, HandlerResources)
 
 	http.HandleFunc("/", shortener.HandleRoot)
 	http.HandleFunc("/shorten", shortener.HandleShortenUrl)

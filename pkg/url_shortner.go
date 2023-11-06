@@ -37,5 +37,33 @@ func (u *UrlShortner) HandleShortenUrl(w http.ResponseWriter, r *http.Request) {
 
 	shortenedURL := fmt.Sprintf("http://%v:%v/short/%s", host, port, shortKey)
 
+	w.Header().Set("Content-Type", "text/html")
+	responseHTML := fmt.Sprintf(`
+        <h2>gurl-shortner</h2>
+        <p>Original URL: %s</p>
+        <p>Shortened URL: <a href="%s">%s</a></p>
+        <form method="post" action="/shorten">
+            <input type="text" name="url" placeholder="Enter a URL">
+            <input type="submit" value="Shorten">
+        </form>
+    `, originalURL, shortenedURL, shortenedURL)
+	fmt.Fprint(w, responseHTML)
+}
+func (u *UrlShortner) HandleRedirectUrl(w http.ResponseWriter, r *http.Request) {
+	shortKey := r.URL.Path[len("/short/"):]
+	if shortKey == "" {
+		http.Error(w, "Shortened key is missing", http.StatusBadRequest)
+		return
+	}
+
+	originalURL, found := u.urls[shortKey]
+	if !found {
+		http.Error(w, "Shortened key not found", http.StatusNotFound)
+		return
+	}
+
+	http.Redirect(w, r, originalURL, http.StatusMovedPermanently)
+}
+
 }
 func (u *UrlShortner) HandleRedirectUrl(w http.ResponseWriter, r *http.Request) {}

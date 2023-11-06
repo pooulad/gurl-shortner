@@ -20,9 +20,12 @@ func main() {
 	host := os.Getenv("HOST_ADDR")
 	port := os.Getenv("HOST_PORT")
 
-	http.HandleFunc("/shorten", shortener.HandleShorten)
-	http.HandleFunc("/short/", shortener.HandleRedirect)
+	http.HandleFunc("/shorten", shortener.HandleShortenUrl)
+	http.HandleFunc("/short/", shortener.HandleRedirectUrl)
 
-	fmt.Printf("URL Shortener is running on %v:%v\n", host, port)
-	http.ListenAndServe(":8080", nil)
+	fmt.Printf("gurl-shortner is running on %v:%v\n", host, port)
+	err = http.ListenAndServe(fmt.Sprintf("%v:%v", host, port), nil)
+	if err != nil {
+		panic(err)
+	}
 }

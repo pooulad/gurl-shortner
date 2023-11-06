@@ -91,7 +91,7 @@ func (u *UrlShortner) HandleShortenUrl(w http.ResponseWriter, r *http.Request) {
        <main class="main">
 	   <h2>gurl-shortner</h2>
 	   <p>Original URL: %s</p>
-	   <p>Shortened URL: <a href="%s">%s</a></p>
+	   <p>Shortened URL: <a target="_blank" href="%s">%s</a></p>
 	   <form method="post" action="/shorten">
 			<input
 			  class="input"

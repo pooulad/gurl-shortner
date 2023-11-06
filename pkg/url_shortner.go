@@ -37,7 +37,7 @@ func (u *UrlShortner) HandleRoot(w http.ResponseWriter, r *http.Request) {
 				<h2>gurl-shortner</h2>
 				<form method="post" action="/shorten">
 					<input type="url" name="url" placeholder="Enter a URL" required>
-					<input type="submit" value="Shorten">
+					<input type="submit" value="Make short now">
 				</form>
 			</body>
 			</html>

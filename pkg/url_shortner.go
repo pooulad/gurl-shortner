@@ -28,19 +28,29 @@ func (u *UrlShortner) HandleRoot(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprint(w, `
-			<!DOCTYPE html>
-			<html>
-			<head>
-				<title>gurl-shortner</title>
-			</head>
-			<body>
-				<h2>gurl-shortner</h2>
-				<form method="post" action="/shorten">
-					<input type="url" name="url" placeholder="Enter a URL" required>
-					<input type="submit" value="Make short now">
-				</form>
-			</body>
-			</html>
+	<!DOCTYPE html>
+	<html>
+	  <head>
+		<title>gurl-shortner</title>
+		<link rel="stylesheet" href="/static/index.css" />
+	  </head>
+	  <body>
+		<main class="main">
+		  <h2>gurl-shortner</h2>
+		  <form method="post" action="/shorten">
+			<input
+			  class="input"
+			  type="url"
+			  name="url"
+			  placeholder="Enter a URL"
+			  required
+			/>
+			<input class="btn" type="submit" value="Make short now" />
+		  </form>
+		</main>
+	  </body>
+	</html>
+	
 		`)
 }
 
@@ -71,13 +81,30 @@ func (u *UrlShortner) HandleShortenUrl(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "text/html")
 	responseHTML := fmt.Sprintf(`
-        <h2>gurl-shortner</h2>
-        <p>Original URL: %s</p>
-        <p>Shortened URL: <a href="%s">%s</a></p>
-        <form method="post" action="/shorten">
-            <input type="text" name="url" placeholder="Enter a URL">
-            <input type="submit" value="Shorten">
-        </form>
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<title>gurl-shortner</title>
+		<link rel="stylesheet" href="/static/index.css" />
+	</head>
+	<body>
+       <main class="main">
+	   <h2>gurl-shortner</h2>
+	   <p>Original URL: %s</p>
+	   <p>Shortened URL: <a href="%s">%s</a></p>
+	   <form method="post" action="/shorten">
+			<input
+			  class="input"
+			  type="url"
+			  name="url"
+			  placeholder="Enter a URL"
+			  required
+			/>
+			<input class="btn" type="submit" value="Make short now" />
+		  </form>
+	   </main>
+		</body>
+		</html>
     `, originalURL, shortenedURL, shortenedURL)
 	fmt.Fprint(w, responseHTML)
 }

@@ -23,3 +23,6 @@ func main() {
 	http.HandleFunc("/shorten", shortener.HandleShorten)
 	http.HandleFunc("/short/", shortener.HandleRedirect)
 
+	fmt.Printf("URL Shortener is running on %v:%v\n", host, port)
+	http.ListenAndServe(":8080", nil)
+}

@@ -20,3 +20,6 @@ func main() {
 	host := os.Getenv("HOST_ADDR")
 	port := os.Getenv("HOST_PORT")
 
+	http.HandleFunc("/shorten", shortener.HandleShorten)
+	http.HandleFunc("/short/", shortener.HandleRedirect)
+

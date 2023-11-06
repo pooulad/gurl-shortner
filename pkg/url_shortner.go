@@ -1,6 +1,14 @@
 package pkg
 
-import "net/http"
+import (
+	"fmt"
+	"math/rand"
+	"net/http"
+	"os"
+	"time"
+
+	"github.com/joho/godotenv"
+)
 
 type UrlShortner struct {
 	urls map[string]string
@@ -65,5 +73,14 @@ func (u *UrlShortner) HandleRedirectUrl(w http.ResponseWriter, r *http.Request) 
 	http.Redirect(w, r, originalURL, http.StatusMovedPermanently)
 }
 
+func shortnerKeyGenerator() string {
+	const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+	const keyLength = 6
+
+	rand.New(rand.NewSource(time.Now().UnixNano()))
+	shortKey := make([]byte, keyLength)
+	for i := range shortKey {
+		shortKey[i] = charset[rand.Intn(len(charset))]
+	}
+	return string(shortKey)
 }
-func (u *UrlShortner) HandleRedirectUrl(w http.ResponseWriter, r *http.Request) {}

@@ -13,3 +13,10 @@ func main() {
 	shortener := pkg.NewUrlShortner(make(map[string]string))
 
 	err := godotenv.Load(".env")
+	if err != nil {
+		panic(err)
+	}
+
+	host := os.Getenv("HOST_ADDR")
+	port := os.Getenv("HOST_PORT")
+

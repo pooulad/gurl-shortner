@@ -1,7 +1,15 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+	"os"
 
-func main(){
-	fmt.Println("new project started...")
-}
+	"github.com/joho/godotenv"
+	"github.com/pooulad/gurl-shortner/pkg"
+)
+
+func main() {
+	shortener := pkg.NewUrlShortner(make(map[string]string))
+
+	err := godotenv.Load(".env")
